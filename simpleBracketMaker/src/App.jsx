@@ -108,19 +108,27 @@ function App() {
         {success && (<div className="alert alert-success" role="alert">{success}</div>)}
       </div>
       <div>
-        <ul>
-            {teamData.map(team => <li key={team.teamName}>{team.teamName}</li>)}
+        <ul className='listGroup'>
+            {teamData.map(team => <li className ="list-group-item list-group-item-primary" key={team.teamName}>{team.teamName}</li>)}
         </ul>
       </div>
       <div>
       <button type="button" onClick={randomizeTeams}>Randomize</button>
-        <ul>
-        {randomizedTeamData.map((teamPairs, index) => (
-          <li key={index}>
-            {teamPairs[0].teamName} vs {teamPairs[1] ? teamPairs[1].teamName : 'BYE'}
-          </li>
+        <div className='bracketContainer'> 
+          {randomizedTeamData.map((teamPairs, index) => (
+            <div className ="bracketMatch" key={index}>
+              <div className="bracketTeam">
+                {teamPairs[0].teamName}
+              </div>
+              <div className="vs">
+                VS
+              </div>
+              <div className="bracketTeam">
+                {teamPairs[1] ? teamPairs[1].teamName : 'BYE'}
+              </div>
+            </div>
         ))}
-        </ul>
+        </div>
       </div>
     </>
   );
