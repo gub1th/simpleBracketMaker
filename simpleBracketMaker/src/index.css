@@ -1,0 +1,9 @@
+.formLabel {
+    font-size: 16px;
+}
+
+.formInput {
+    border: 1px solid lightgray;
+    border-radius: 6px;
+    font-size: 16px;
+}
