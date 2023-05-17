@@ -21,6 +21,9 @@ function App() {
   //for error handling
   const [error, setError] = useState("");
 
+  //for error handling of randomize
+  const [error2, setError2] = useState("");
+
   //for successfully creating team
   const [success, setSuccess] = useState("");
 
@@ -62,6 +65,11 @@ function App() {
   }
 
   const randomizeTeams = () => {
+    if (teamData.length === 0) {
+      setError2("No teams are inputted yet. Cannot randomize");
+      return;
+    }
+    setError2("");
     let res = []
     //making a deep copy
     let tempTeamData = JSON.parse(JSON.stringify(teamData));
@@ -114,6 +122,7 @@ function App() {
       </div>
       <div>
       <button type="button" onClick={randomizeTeams}>Randomize</button>
+      {error2 && (<div className="alert alert-danger" role="alert">{error2}</div>)}
         <div className='bracketContainer'> 
           {randomizedTeamData.map((teamPairs, index) => (
             <div className ="bracketMatch" key={index}>
