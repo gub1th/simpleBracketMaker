@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import NavigationBar from "./NavigationBar";
 
 function App() {
 
@@ -139,6 +140,7 @@ function App() {
 
   return (
     <>
+      <NavigationBar/>
       <h1>Welcome to the SimpleBracketMaker!</h1>
 
       <div>
@@ -176,13 +178,25 @@ function App() {
               {round.map((match, matchIndex) => (
                 <div className="bracketMatch" key={matchIndex}>
                   <div className="bracketTeam">
-                    {match.team1 ? match.team1.teamName : 'BYE'}
+                  {match.team1 ? (
+                    match.team1.teamName
+                  ) : roundIndex === 0 ? (
+                    'BYE'
+                  ) : (
+                    'TBD'
+                  )}
                   </div>
                   <div className="vs">
                     VS
                   </div>
                   <div className="bracketTeam">
-                    {match.team2 ? match.team2.teamName : 'BYE'}
+                    {match.team2 ? (
+                      match.team2.teamName
+                    ) : roundIndex === 0 ? (
+                      'BYE'
+                    ) : (
+                      'TBD'
+                    )}
                   </div>
                 </div>
               ))}
