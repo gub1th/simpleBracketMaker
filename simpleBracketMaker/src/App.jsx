@@ -85,40 +85,6 @@ function App() {
     setTimeout(() => {setSuccess('');}, 3000);
   }
 
-  // const randomizeTeams = () => {
-  //   if (teamData.length === 0) {
-  //     setError2("No teams are inputted yet. Cannot randomize");
-  //     return;
-  //   }
-  //   setError2("");
-  //   let res = []
-  //   //making a deep copy
-  //   let tempTeamData = JSON.parse(JSON.stringify(teamData));
-
-  //   while (tempTeamData.length > 0) {
-  //     const randIndex1 = Math.floor(Math.random()*tempTeamData.length);
-  //     //grabbing the element
-  //     const team1 = tempTeamData[randIndex1];
-  //     //removing the element
-  //     tempTeamData.splice(randIndex1, 1);
-
-  //     const randIndex2 = Math.floor(Math.random()*tempTeamData.length);
-  //     //grabbing the element
-  //     const team2 = tempTeamData[randIndex2];
-  //     //removing the element
-  //     tempTeamData.splice(randIndex2, 1);
-
-  //     const pair = [team1, team2];
-  //     res.push(pair);
-  //   }
-
-  //   // Handle the case of an odd number of teams
-  //   if (tempTeamData.length === 1) {
-  //     res.push([tempTeamData[0], null]);
-  //   }
-  //   setRandomizedTeamData(res);
-  // }
-
   const randomizeTeams = () => {
     if (teamData.length < 2) {
       setError2("You need to input at least 2 teams. Cannot randomize");
@@ -165,6 +131,12 @@ function App() {
     console.log(rounds);
   }
 
+  function deleteTeam(teamName) {
+    setTeamData(currentTeamData => {
+      return currentTeamData.filter(team => team.teamName != teamName);
+    })
+  }
+
   return (
     <>
       <h1>Welcome to the SimpleBracketMaker!</h1>
@@ -184,7 +156,12 @@ function App() {
       </div>
       <div>
         <ul className='listGroup'>
-            {teamData.map(team => <li className ="list-group-item list-group-item-primary" key={team.teamName}>{team.teamName}</li>)}
+            {teamData.map(
+              team => <li className ="list-group-item list-group-item-primary" key={team.teamName}>
+                        {team.teamName}
+                        <button onClick={() => deleteTeam(team.teamName)} className="btn btn-danger">Delete</button>
+                      </li>
+            )}
         </ul>
       </div>
       <div>
