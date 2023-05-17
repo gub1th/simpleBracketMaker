@@ -191,7 +191,7 @@ function App() {
         <h5>Team Count : {teamData.length}</h5><br/>
       </div>
       <div>
-        <button type="button" onClick={randomizeTeams}>Randomize</button>
+        <button type="button" onClick={randomizeTeams}>Randomize</button><br/><br/>
         {error2 && (<div className="alert alert-danger" role="alert">{error2}</div>)}
         <div className='bracketContainer'> 
           {rounds.map((round, roundIndex) => (
