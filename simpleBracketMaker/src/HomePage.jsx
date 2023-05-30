@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import FormComponent from './components/FormComponent';
+import ListTeamsComponent from './components/ListTeamsComponent';
 
 function HomePage() {
     //actual team(s) data
     const [teamData, setTeamData] = useState([]);
   
     //for error handling of randomize
-    const [error2, setError2] = useState("");
+    const [randomizeError, setRandomizeError] = useState("");
   
     //for the rounds
     const [rounds, setRounds] = useState([]);
@@ -31,10 +32,10 @@ function HomePage() {
   
     const randomizeTeams = () => {
       if (teamData.length < 2) {
-        setError2("You need to input at least 2 teams. Cannot randomize");
+        setRandomizeError("You need to input at least 2 teams. Cannot randomize");
         return;
       }
-      setError2("");
+      setRandomizeError("");
   
       let res = []
       //making a deep copy
@@ -88,22 +89,16 @@ function HomePage() {
             teamData = {teamData}
             setTeamData = {setTeamData}
         />
-        <div>
-          <ul className='listGroup'>
-              {teamData.map(
-                team => <li className ="list-group-item list-group-item-primary" key={team.teamName}>
-                          {team.teamName}
-                          <button onClick={() => deleteTeam(team.teamName)} className="btn btn-danger">Delete</button>
-                        </li>
-              )}
-          </ul>
-        </div>
+        <ListTeamsComponent
+            teamData = {teamData}
+            deleteTeam = {deleteTeam}
+        />
         <div>
           <h5>Team Count : {teamData.length}</h5><br/>
         </div>
         <div>
           <button type="button" onClick={randomizeTeams}>Randomize</button><br/><br/>
-          {error2 && (<div className="alert alert-danger" role="alert">{error2}</div>)}
+          {randomizeError && (<div className="alert alert-danger" role="alert">{randomizeError}</div>)}
           <div className='bracketContainer'> 
             {rounds.map((round, roundIndex) => (
               <div className="bracketRound" key={roundIndex}>

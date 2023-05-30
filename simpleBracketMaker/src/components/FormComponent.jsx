@@ -5,7 +5,10 @@ function FormComponent ({teamData, setTeamData}) {
     const initialFormData = {
         teamName : "",
         member1 : "",
-        member2 : ""
+        member2 : "",
+        displayName : function() {
+            return this.teamName;
+        }
     };
 
     //for the form data
