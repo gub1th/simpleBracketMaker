@@ -3,6 +3,15 @@ import ListItemsComponent from './components/ListItemsComponent';
 import FormComponent2 from './components/FormComponent2';
 
 function HomePage() {
+  interface Team {
+    teamName: string;
+  }
+  
+  interface Match {
+    team1: Team | null;
+    team2: Team | null;
+  }
+
 
   //these are the fields that the Add Team form would need
   const teamFields = [
@@ -38,8 +47,8 @@ function HomePage() {
       },
     ];
 
-    //actual team(s) data
-    const [teamData, setTeamData] = useState([]);
+    // Define the type of 'teamData' as an array of 'Team'
+    const [teamData, setTeamData] = useState<Team[]>([]);
     /*
     [
       {
@@ -55,16 +64,16 @@ function HomePage() {
   
     //for error handling of randomize
     const [randomizeError, setRandomizeError] = useState("");
-  
+
     //for the rounds
-    const [rounds, setRounds] = useState([]);
-  
+    const [rounds, setRounds] = useState<Match[][]>([]);
+
     const initializeRounds = () => {
-      const tempRounds = []
+      const tempRounds: Match[][] = [];
       const numRounds = Math.ceil(Math.log2(teamData.length))
   
       for (let i = 0; i < numRounds; i++) {
-        const tempRound = [];
+        const tempRound: Match[] = [];
         const numMatches = teamData.length / Math.pow(2, i + 1);
         for (let j = 0; j < numMatches; j++) {
           tempRound.push({
@@ -83,44 +92,44 @@ function HomePage() {
         return;
       }
       setRandomizeError("");
-  
-      let res = []
+    
+      let res: [Team | null, Team | null][] = []; // Define the type of 'res' as an array of tuples of 'Team | null'
       //making a deep copy
-      let tempTeamData = JSON.parse(JSON.stringify(teamData));
-  
+      let tempTeamData: Team[] = JSON.parse(JSON.stringify(teamData)); // Define the type of 'tempTeamData' as an array of 'Team'
+    
       while (tempTeamData.length > 0) {
-        const randIndex1 = Math.floor(Math.random()*tempTeamData.length);
+        const randIndex1 = Math.floor(Math.random() * tempTeamData.length);
         //grabbing the element
         const team1 = tempTeamData[randIndex1];
         //removing the element
         tempTeamData.splice(randIndex1, 1);
-  
-        const randIndex2 = Math.floor(Math.random()*tempTeamData.length);
+    
+        const randIndex2 = Math.floor(Math.random() * tempTeamData.length);
         //grabbing the element
         const team2 = tempTeamData[randIndex2];
         //removing the element
         tempTeamData.splice(randIndex2, 1);
-  
-        const pair = [team1, team2];
+    
+        const pair: [Team | null, Team | null] = [team1, team2]; // Define the type of 'pair' as a tuple of 'Team | null'
         res.push(pair);
       }
-  
+    
       // Handle the case of an odd number of teams
       if (tempTeamData.length === 1) {
         res.push([tempTeamData[0], null]);
       }
-  
+    
       //initializing all the rounds
-      let tempRounds = initializeRounds();
+      let tempRounds: Match[][] = initializeRounds(); // Define the type of 'tempRounds' as an array of 'Match[]'
       //filling in the first rounds
       for (let i = 0; i < res.length; i++) {
-        tempRounds[0][i].team1 = res[i][0]
-        tempRounds[0][i].team2 = res[i][1]
+        tempRounds[0][i].team1 = res[i][0];
+        tempRounds[0][i].team2 = res[i][1];
       }
       setRounds(tempRounds);
-  
+    
       console.log(rounds);
-    }
+    };
   
     function deleteTeam(teamName) {
       setTeamData(currentTeamData => {
