@@ -6,6 +6,7 @@ function PlayerPage() {
 
     const playerFields = [
         {
+          isDisplayNameField: true,
           name: 'pName',
           label: 'Name',
           validation: {
@@ -15,6 +16,7 @@ function PlayerPage() {
           },
         },
         {
+          isDisplayNameField: false,
           name: 'pAge',
           label: 'Age',
           validation: {
@@ -24,6 +26,7 @@ function PlayerPage() {
           },
         },
         {
+          isDisplayNameField: false,
           name: 'pHeight',
           label: 'Height',
           validation: {

@@ -1,10 +1,57 @@
 import React, { useState, useEffect } from 'react';
-import FormComponent from './components/FormComponent';
-import ListTeamsComponent from './components/ListTeamsComponent';
+import ListItemsComponent from './components/ListItemsComponent';
+import FormComponent2 from './components/FormComponent2';
 
 function HomePage() {
+
+  //these are the fields that the Add Team form would need
+  const teamFields = [
+      {
+        isDisplayNameField: true,
+        name: 'teamName',
+        label: 'Team Name',
+        validation: {
+          required: true,
+          // pattern: /^[a-zA-Z]+$/,
+          // errorMsg: 'Name should only contain alphabetic characters.',
+        },
+      },
+      {
+        isDisplayNameField: false,
+        name: 'member1',
+        label: 'Member 1',
+        validation: {
+          required: true,
+          pattern: /^[a-zA-Z]+$/,
+          errorMsg: 'Member 1 should only contain letters.',
+        },
+      },
+      {
+        isDisplayNameField: false,
+        name: 'member2',
+        label: 'Member 2',
+        validation: {
+          required: true,
+          pattern: /^[a-zA-Z]+$/,
+          errorMsg: 'Member 2 should only contain letters.',
+        },
+      },
+    ];
+
     //actual team(s) data
     const [teamData, setTeamData] = useState([]);
+    /*
+    [
+      {
+        attribute1:
+        isDisplayName1:
+      },
+      {
+        attribute2:
+        isDisplayName2:
+      }
+    ]
+    */
   
     //for error handling of randomize
     const [randomizeError, setRandomizeError] = useState("");
@@ -85,13 +132,14 @@ function HomePage() {
       <>
         <h1>Welcome to the SimpleBracketMaker!</h1>
   
-        <FormComponent
-            teamData = {teamData}
-            setTeamData = {setTeamData}
+        <FormComponent2
+            data = {teamData}
+            setData = {setTeamData}
+            fields = {teamFields}
         />
-        <ListTeamsComponent
-            teamData = {teamData}
-            deleteTeam = {deleteTeam}
+        <ListItemsComponent
+            itemsData = {teamData}
+            deleteItem = {deleteTeam}
         />
         <div>
           <h5>Team Count : {teamData.length}</h5><br/>

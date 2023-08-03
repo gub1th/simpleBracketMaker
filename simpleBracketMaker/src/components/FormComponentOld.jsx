@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function FormComponent ({teamData, setTeamData}) {
+function FormComponentOld ({teamData, setTeamData}) {
     //for initializing/resetting
     const initialFormData = {
         teamName : "",
@@ -73,4 +73,4 @@ function FormComponent ({teamData, setTeamData}) {
     )
 }
 
-export default FormComponent;
+export default FormComponentOld;

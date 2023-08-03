@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 
 function FormComponent2({ data, setData, fields }) {
-  const initialFormData = Object.fromEntries(fields.map((field) => [field.name, '']));
+  const initialFormData = Object.fromEntries(fields.map((field) => [field.name, { value: '', isDisplayNameField: field.isDisplayNameField }]));
 
   const [formData, setFormData] = useState(initialFormData);
   const [formErrors, setFormErrors] = useState({});
   const [formSuccess, setFormSuccess] = useState('');
 
+  //handler to update form data when you input things into form
   const handleInputChange = (event) => {
     const { id, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [id]: value,
+      //[id]: value,
+      [id]: { ...prevData[id], value: value },
     }));
   };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,7 +26,7 @@ function FormComponent2({ data, setData, fields }) {
 
     fields.forEach((field) => {
       const { name, label, validation } = field;
-      const fieldValue = formData[name].trim();
+      const fieldValue = formData[name].value.trim();
 
       if (validation.required && fieldValue === '') {
         errors[name] = `${label} is required`;
@@ -44,7 +47,7 @@ function FormComponent2({ data, setData, fields }) {
 
     // special case for team form
     if (formData.hasOwnProperty('teamName')) {
-      const teamNameInput = formData.teamName.trim();
+      const teamNameInput = formData.teamName.value.trim();
       if (data.some((team) => team.teamName === teamNameInput)) {
         setFormErrors({ teamName: 'Team name already exists.' });
         setFormSuccess('');
@@ -76,7 +79,7 @@ function FormComponent2({ data, setData, fields }) {
               className="formInput"
               type="text"
               id={field.name}
-              value={formData[field.name]}
+              value={formData[field.name].value}
               onChange={handleInputChange}
             />
             {formErrors[field.name] && (
