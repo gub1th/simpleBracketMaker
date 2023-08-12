@@ -1,37 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ListItemsComponent from './components/ListItemsComponent';
 import FormComponent2 from './components/FormComponent2';
+import { Team, Match, formField } from './interfaces';
 
 function HomePage() {
-  //this is the data that is actualy stored/passed along. multiple fields (like name, age) make up a single, complete 'data point'
-  interface Field {
-    value: string;
-    isDisplayNameField: boolean;
-  }
-  
-  interface Team {
-    teamName: Field;
-    member1: Field;
-    member2: Field;
-  }
-  
-  interface Match {
-    team1: Team | null;
-    team2: Team | null;
-  }
-
-  interface formFieldValidation {
-    required: boolean;
-    pattern?: RegExp;
-    errorMsg?: string;
-  }
-  // this field only exists within a form
-  interface formField {
-    isDisplayNameField: boolean;
-    name: string;
-    label: string;
-    validation: formFieldValidation;
-  }
 
   //these are the fields that the Add Team form would need
   const teamFields: formField[] = [

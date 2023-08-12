@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import ListItemsComponent from './components/ListItemsComponent';
 import FormComponent2 from './components/FormComponent2';
+import { formField, Player } from './interfaces';
 
 function PlayerPage() {
-    const [playerData, setPlayerData] = useState([]);
+    const [playerData, setPlayerData] = useState<Player[]>([]);
 
-    const playerFields = [
+    const playerFields : formField[] = [
         {
           isDisplayNameField: true,
           name: 'pName',
@@ -37,6 +39,12 @@ function PlayerPage() {
         },
       ];
 
+      function deletePlayer(playerNameVal : string) {
+        setPlayerData(currentPlayerData => {
+          return currentPlayerData.filter(player => player.pName.value != playerNameVal);
+        })
+      }
+
     return (
         <>
             <div>
@@ -47,6 +55,10 @@ function PlayerPage() {
                 setData={setPlayerData}
                 fields={playerFields}
             />
+            <ListItemsComponent
+            itemsData = {playerData}
+            deleteItem = {deletePlayer}
+        />
         </>
     )
 }
