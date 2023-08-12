@@ -3,8 +3,16 @@ import ListItemsComponent from './components/ListItemsComponent';
 import FormComponent2 from './components/FormComponent2';
 
 function HomePage() {
+  //this is the data that is actualy stored/passed along. multiple fields (like name, age) make up a single, complete 'data point'
+  interface Field {
+    value: string;
+    isDisplayNameField: boolean;
+  }
+  
   interface Team {
-    teamName: string;
+    teamName: Field;
+    member1: Field;
+    member2: Field;
   }
   
   interface Match {
@@ -12,9 +20,21 @@ function HomePage() {
     team2: Team | null;
   }
 
+  interface formFieldValidation {
+    required: boolean;
+    pattern?: RegExp;
+    errorMsg?: string;
+  }
+  // this field only exists within a form
+  interface formField {
+    isDisplayNameField: boolean;
+    name: string;
+    label: string;
+    validation: formFieldValidation;
+  }
 
   //these are the fields that the Add Team form would need
-  const teamFields = [
+  const teamFields: formField[] = [
       {
         isDisplayNameField: true,
         name: 'teamName',
@@ -96,7 +116,8 @@ function HomePage() {
       let res: [Team | null, Team | null][] = []; // Define the type of 'res' as an array of tuples of 'Team | null'
       //making a deep copy
       let tempTeamData: Team[] = JSON.parse(JSON.stringify(teamData)); // Define the type of 'tempTeamData' as an array of 'Team'
-    
+      console.log(teamData);
+      console.log(tempTeamData);
       while (tempTeamData.length > 0) {
         const randIndex1 = Math.floor(Math.random() * tempTeamData.length);
         //grabbing the element
@@ -131,9 +152,9 @@ function HomePage() {
       console.log(rounds);
     };
   
-    function deleteTeam(teamName) {
+    function deleteTeam(teamNameVal : string) {
       setTeamData(currentTeamData => {
-        return currentTeamData.filter(team => team.teamName != teamName);
+        return currentTeamData.filter(team => team.teamName.value != teamNameVal);
       })
     }
   
@@ -163,7 +184,7 @@ function HomePage() {
                   <div className="bracketMatch" key={matchIndex}>
                     <div className="bracketTeam">
                     {match.team1 ? (
-                      match.team1.teamName
+                      match.team1.teamName.value
                     ) : roundIndex === 0 ? (
                       'BYE'
                     ) : (
@@ -175,7 +196,7 @@ function HomePage() {
                     </div>
                     <div className="bracketTeam">
                       {match.team2 ? (
-                        match.team2.teamName
+                        match.team2.teamName.value
                       ) : roundIndex === 0 ? (
                         'BYE'
                       ) : (
