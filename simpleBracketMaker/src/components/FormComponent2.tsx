@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
+import { formField } from '../HomePage'
 
-function FormComponent2({ data, setData, fields }) {
+type FormComponentProps = {
+  data: any; // Replace 'any' with the actual type of 'data'
+  setData: React.Dispatch<React.SetStateAction<any>>; // Replace 'any' with the actual type of 'data'
+  fields: formField[];
+};
+
+function FormComponent2({ data, setData, fields }: FormComponentProps) {
   const initialFormData = Object.fromEntries(fields.map((field) => [field.name, { value: '', isDisplayNameField: field.isDisplayNameField }]));
 
   const [formData, setFormData] = useState(initialFormData);
